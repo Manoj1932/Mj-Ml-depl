@@ -1,24 +1,21 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import joblib
-import os
+import numpy as np
 
 app = FastAPI()
 
 # Load model
 model = joblib.load("model.pkl")
 
+# Serve Frontend (predict.html)
 @app.get("/")
 def home():
-    file_path = os.path.join(os.path.dirname(__file__), "index.html")
-    return FileResponse(file_path)
+    return FileResponse("predict.html")
 
+# Predict API
 @app.post("/predict")
-def predict(data: dict):
-    features = [
-        data["feature1"],
-        data["feature2"],
-        data["feature3"]
-    ]
-    prediction = model.predict([features])[0]
-    return {"prediction": prediction}
+def predict(feature1: float, feature2: float):
+    data = np.array([[feature1, feature2]])
+    result = model.predict(data)
+    return {"prediction": int(result[0])}
