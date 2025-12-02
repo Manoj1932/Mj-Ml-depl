@@ -1,3 +1,4 @@
+from fastapi.responses import FileResponse
 from fastapi import FastAPI
 import joblib
 
@@ -14,3 +15,7 @@ def predict(data: dict):
     value = data["input"]
     result = model.predict([[value]])[0]
     return {"prediction": int(result)}
+@app.get("/")
+def home():
+    return FileResponse("index.html")
+   
