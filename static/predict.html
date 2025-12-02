@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MJ ML Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            padding: 20px;
+        }
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+        }
+        button {
+            background: #0066ff;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #004ccc;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>MJ Machine Learning Predictor</h2>
+
+    <label>Enter 4 numbers:</label>
+    <input id="n1" type="number" placeholder="Number 1">
+    <input id="n2" type="number" placeholder="Number 2">
+    <input id="n3" type="number" placeholder="Number 3">
+    <input id="n4" type="number" placeholder="Number 4">
+
+    <button onclick="predict()">Predict</button>
+
+    <div class="result" id="resultBox"></div>
+</div>
+
+<script>
+async function predict() {
+    const n1 = Number(document.getElementById("n1").value);
+    const n2 = Number(document.getElementById("n2").value);
+    const n3 = Number(document.getElementById("n3").value);
+    const n4 = Number(document.getElementById("n4").value);
+
+    const bodyData = { f1: n1, f2: n2, f3: n3, f4: n4 };
+
+    let response = await fetch("https://mj-ml-depl-6.onrender.com/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData)
+    });
+
+    let result = await response.json();
+    document.getElementById("resultBox").innerText = "Prediction: " + result.prediction;
+}
+</script>
+
+</body>
+</html>
