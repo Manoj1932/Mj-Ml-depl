@@ -1,39 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MJ ML Prediction</title>
+    <title>MJ ML App</title>
 </head>
 <body>
-    <h1>MJ Prediction App</h1>
-
-    <label>Feature 1:</label>
-    <input id="f1" type="number"><br><br>
-
-    <label>Feature 2:</label>
-    <input id="f2" type="number"><br><br>
-
-    <button onclick="send()">Predict</button>
-
-    <h2 id="result"></h2>
-
-    <script>
-        async function send() {
-            let f1 = document.getElementById("f1").value;
-            let f2 = document.getElementById("f2").value;
-
-            const res = await fetch("/predict", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    feature1: parseFloat(f1),
-                    feature2: parseFloat(f2)
-                })
-            });
-
-            const data = await res.json();
-            document.getElementById("result").innerHTML = "Prediction: " + data.prediction;
-        }
-    </script>
-
+    <h1>Welcome to MJ ML App</h1>
+    <a href="/predict">Go to Predictor</a>
 </body>
 </html>
